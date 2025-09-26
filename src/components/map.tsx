@@ -146,35 +146,6 @@ const CustomMarker = ({
     );
     imageOverlay.setMap(map);
 
-    // Create info window
-    const infoWindow = new google.maps.InfoWindow({
-      content: `
-        <div style="max-width: 300px; padding: 10px;">
-          <img src="${event.images[0]?.url}" alt="${event.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;" />
-          <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">${event.title}</h3>
-          <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${event.location_name}</p>
-          <p style="margin: 0 0 8px 0; font-size: 14px;">${event.description}</p>
-          <p style="margin: 0; color: #888; font-size: 12px;">
-            ${new Date(event.start_time).toLocaleDateString()} at ${new Date(event.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </p>
-          <div style="margin-top: 8px;">
-            ${event.filters.map(filter => `<span style="background: #e3f2fd; color: #1976d2; padding: 2px 6px; border-radius: 12px; font-size: 11px; margin-right: 4px;">${filter.name}</span>`).join('')}
-          </div>
-        </div>
-      `,
-    });
-
-    // Add click listeners to both marker and image overlay
-    const openInfoWindow = () => {
-      infoWindow.open(map, marker);
-    };
-
-    marker.addListener('click', openInfoWindow);
-    
-    // Add click listener to the image overlay
-    if (imageOverlay.div) {
-      imageOverlay.div.addEventListener('click', openInfoWindow);
-    }
 
     markerRef.current = marker;
     overlayRef.current = imageOverlay;
