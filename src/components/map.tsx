@@ -180,8 +180,8 @@ const MapComponent = ({ center, zoom }: { center: google.maps.LatLngLiteral; zoo
           );
           if (!refPoint) continue;
 
-          const dx = (point.x - refPoint.x) * (1 << map.getZoom());
-          const dy = (point.y - refPoint.y) * (1 << map.getZoom());
+          const dx = (point.x - refPoint.x) * (1 << (map!.getZoom() ?? 0));
+          const dy = (point.y - refPoint.y) * (1 << (map!.getZoom() ?? 0));
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < clusterDistance) {
@@ -196,7 +196,7 @@ const MapComponent = ({ center, zoom }: { center: google.maps.LatLngLiteral; zoo
       const newVisible: { [id: string]: Event } = {};
       clusters.forEach((cluster) => {
         const chosen = cluster.reduce((a, b) =>
-          new Date(a.startDate) < new Date(b.startDate) ? a : b
+          new Date(a.start_time) < new Date(b.start_time) ? a : b
         );
         newVisible[chosen.id] = chosen;
       });
